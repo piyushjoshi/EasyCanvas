@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Canvas: Rectangle</title>
+		<style>
+			canvas{
+				border-style:none;
+				font:bold 12px sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="theCanvas" width="500" height="375">
+		</canvas>
+		<script type="text/javascript" src="/canvasUtils.js"></script>
+		<script type="text/javascript">
+			;(function(win){
+				var rect,
+					canvas = document.getElementById("theCanvas"),
+					context = canvas.getContext("2d"),
+					ctxWrap,
+					gradient,
+					i,
+					image;
+				
+				if(win.ContextWrapper){
+					// get wrapper
+					ctxWrap = new win.ContextWrapper(context);
+					
+					// create gradient
+					gradient = ctxWrap.lineargradient().startFrom(0,0).endAt(150, 100)
+						.colorStop(0, "black").colorStop(1, "white").instantiate();
+
+					// draw rectangle
+					rect = ctxWrap.rectangle();
+					rect.x(0).y(0).width(150).height(100).fillColor(gradient).strokeColor(gradient).stroke();
+
+					// resetting fill style
+					ctxWrap.fillStyle("black");
+
+					// drawing vertical lines
+					ctxWrap.beginPath();
+					for(i = 0.5; i < canvas.width; i+=10){
+						ctxWrap.moveTo(i, 0).lineTo(i, canvas.height);
+					}
+					ctxWrap.strokeColor("#eee").stroke();
+					
+					// drawing horizontal lines
+					ctxWrap.beginPath();
+					for(i = 0.5; i < canvas.height; i+=10){
+						ctxWrap.moveTo(0, i).lineTo(canvas.width, i);
+					}
+					ctxWrap.strokeColor("#eee").stroke();
+
+					// some text
+					ctxWrap.text().font("bold 12px sans-serif green").val("Piyush").x(200).y(200).print()
+						.x(canvas.width-5).y(canvas.height-5).textAlign("right").textBaseline("bottom").print();
+
+					// image
+					ctxWrap.image().src("/taj.png").upperLeft(150, 100).width(100).height(100).draw()
+						.upperLeft(250,200).draw();
+
+					// circle
+					ctxWrap.beginPath().circle().x(250).y(100).radius(50).strokeColor("red").stroke();
+
+					// click handler
+					var circle = ctxWrap.circle().radius(10).fillColor("green");
+					ctxWrap.attach("click",function(e){
+						console.log(e.x + ", " + e.y);
+						circle.x(e.x).y(e.y).fill();
+					});
+				}
+			})(window);
+		</script>
+	</body>
+</html>
+
