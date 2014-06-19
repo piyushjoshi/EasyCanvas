@@ -1,0 +1,4 @@
+	loadShapes(ContextWrapper);
+	exposeAPI(win);
+
+})(window);
