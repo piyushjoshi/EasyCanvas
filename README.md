@@ -3,6 +3,14 @@ EasyCanvas
 
 Its a library to simplify working with HTML5 Canvas.
 
+Use: 'dist/EasyCanvas.min.js"
+
+Build: 
+```	
+	npm install
+	grunt
+```
+
 ##Why?
 
 The HTML5 Canvas API is verbose and requires many lines of code to do simple things.
